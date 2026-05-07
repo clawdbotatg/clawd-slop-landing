@@ -60,6 +60,7 @@ export const DAPPS: Dapp[] = [
   { name: "Lens", url: "https://lens.xyz", domain: "lens.xyz", category: "Social" },
   { name: "Towns", url: "https://towns.com", domain: "towns.com", category: "Social" },
   { name: "Rodeo", url: "https://rodeo.club", domain: "rodeo.club", category: "Social" },
+  { name: "Orb", url: "https://orb.club", domain: "orb.club", category: "Social" },
 
   // Identity
   { name: "ENS", url: "https://ens.domains", domain: "ens.domains", category: "Identity" },
@@ -67,22 +68,30 @@ export const DAPPS: Dapp[] = [
   { name: "SIWE", url: "https://login.xyz", domain: "login.xyz", category: "Identity" },
   { name: "Huddle01", url: "https://huddle01.com", domain: "huddle01.com", category: "Identity" },
   { name: "Livepeer", url: "https://livepeer.org", domain: "livepeer.org", category: "Identity" },
+  { name: "ZK Passport", url: "https://zkpassport.id", domain: "zkpassport.id", category: "Identity" },
+  { name: "QuarkID", url: "https://quarkid.org", domain: "quarkid.org", category: "Identity" },
 
   // DAOs
   { name: "Snapshot", url: "https://snapshot.org", domain: "snapshot.org", category: "DAOs" },
   { name: "Tally", url: "https://tally.xyz", domain: "tally.xyz", category: "DAOs" },
   { name: "Aragon", url: "https://aragon.org", domain: "aragon.org", category: "DAOs" },
   { name: "Hats", url: "https://hatsprotocol.xyz", domain: "hatsprotocol.xyz", category: "DAOs" },
+  { name: "DAOhaus", url: "https://daohaus.club", domain: "daohaus.club", category: "DAOs" },
 
   // Privacy
   { name: "Fluidkey", url: "https://fluidkey.com", domain: "fluidkey.com", category: "Privacy" },
   { name: "Railgun", url: "https://railgun.org", domain: "railgun.org", category: "Privacy" },
   { name: "Privacy Pools", url: "https://privacypools.com", domain: "privacypools.com", category: "Privacy" },
+  { name: "Rarimo", url: "https://rarimo.com", domain: "rarimo.com", category: "Privacy" },
+  { name: "Tornado Cash", url: "https://tornadocash.eth.limo", domain: "tornadocash.eth.limo", category: "Privacy" },
 
   // Gaming
   { name: "EVE Frontier", url: "https://www.evefrontier.com", domain: "evefrontier.com", category: "Gaming" },
   { name: "Eternum", url: "https://eternum.realms.world", domain: "realms.world", category: "Gaming" },
   { name: "Pirate Nation", url: "https://piratenation.game", domain: "piratenation.game", category: "Gaming" },
+  { name: "Eureka", url: "https://eureka.game", domain: "eureka.game", category: "Gaming" },
+  { name: "Scout Game", url: "https://scoutgame.xyz", domain: "scoutgame.xyz", category: "Gaming" },
+  { name: "Gigaverse", url: "https://gigaverse.io", domain: "gigaverse.io", category: "Gaming" },
 
   // Bridges
   { name: "Across", url: "https://app.across.to", domain: "across.to", category: "Bridges" },
@@ -90,6 +99,7 @@ export const DAPPS: Dapp[] = [
   { name: "Stargate", url: "https://stargate.finance", domain: "stargate.finance", category: "Bridges" },
   { name: "Layerswap", url: "https://layerswap.io", domain: "layerswap.io", category: "Bridges" },
   { name: "Relay", url: "https://relay.link", domain: "relay.link", category: "Bridges" },
+  { name: "Particle Network", url: "https://particle.network", domain: "particle.network", category: "Bridges" },
 
   // Staking
   { name: "Launchpad", url: "https://launchpad.ethereum.org", domain: "launchpad.ethereum.org", category: "Staking" },
