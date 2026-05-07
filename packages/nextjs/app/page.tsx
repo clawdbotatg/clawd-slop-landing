@@ -1,73 +1,129 @@
 "use client";
 
-import Link from "next/link";
-import { Address } from "@scaffold-ui/components";
+import { FormEvent, useState } from "react";
 import type { NextPage } from "next";
-import { useAccount } from "wagmi";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useTargetNetwork } from "~~/hooks/scaffold-eth";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { CATEGORIES, DAPPS, faviconUrl } from "~~/data/dapps";
+
+const LOGO_COLORS = ["#4285F4", "#EA4335", "#FBBC05", "#4285F4", "#34A853", "#EA4335", "#FBBC05", "#4285F4"];
+const LOGO_LETTERS = "ETHEREUM".split("");
 
 const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
-  const { targetNetwork } = useTargetNetwork();
+  const [query, setQuery] = useState("");
+
+  const submitSearch = (e: FormEvent) => {
+    e.preventDefault();
+    const q = query.trim();
+    if (!q) return;
+    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(q + " ethereum")}`;
+  };
+
+  const feelingLucky = () => {
+    const q = query.trim();
+    if (!q) {
+      const random = DAPPS[Math.floor(Math.random() * DAPPS.length)];
+      window.location.href = random.url;
+      return;
+    }
+    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(q + " ethereum")}&btnI=1`;
+  };
 
   return (
-    <>
-      <div className="flex items-center flex-col grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} chain={targetNetwork} />
-          </div>
+    <div className="flex flex-col items-center grow w-full px-4 pt-16 sm:pt-24 pb-16">
+      <h1 className="flex font-sans font-medium select-none mb-8 sm:mb-10 leading-none tracking-tight">
+        {LOGO_LETTERS.map((letter, i) => (
+          <span key={i} className="text-7xl sm:text-8xl" style={{ color: LOGO_COLORS[i % LOGO_COLORS.length] }}>
+            {letter}
+          </span>
+        ))}
+      </h1>
 
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
+      <form onSubmit={submitSearch} className="w-full max-w-xl">
+        <label
+          htmlFor="search"
+          className="flex items-center gap-3 px-5 py-3 rounded-full border border-base-300 bg-base-100 shadow-sm hover:shadow-md focus-within:shadow-md transition-shadow"
+        >
+          <MagnifyingGlassIcon className="h-5 w-5 opacity-50 shrink-0" />
+          <input
+            id="search"
+            type="text"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            placeholder="Search Ethereum"
+            className="grow bg-transparent outline-none text-base"
+            autoComplete="off"
+          />
+        </label>
 
-        <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col md:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-          </div>
+        <div className="flex justify-center gap-3 mt-6 flex-wrap">
+          <button
+            type="submit"
+            className="btn btn-sm bg-base-200 hover:bg-base-300 border-base-300 normal-case font-normal px-5"
+          >
+            Ethereum Search
+          </button>
+          <button
+            type="button"
+            onClick={feelingLucky}
+            className="btn btn-sm bg-base-200 hover:bg-base-300 border-base-300 normal-case font-normal px-5"
+          >
+            I&apos;m Feeling Decentralized
+          </button>
         </div>
+      </form>
+
+      <p className="mt-6 text-sm opacity-70 text-center max-w-md">Or jump straight into a live dapp 👇</p>
+
+      <div className="w-full max-w-6xl mt-10 space-y-10">
+        {CATEGORIES.map(category => {
+          const items = DAPPS.filter(d => d.category === category);
+          if (items.length === 0) return null;
+          return (
+            <section key={category}>
+              <h2 className="text-sm uppercase tracking-widest opacity-60 mb-4 px-1">{category}</h2>
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4">
+                {items.map(dapp => (
+                  <a
+                    key={dapp.name}
+                    href={dapp.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col items-center gap-2 p-3 rounded-2xl bg-base-100 hover:bg-base-300 transition-colors border border-transparent hover:border-base-300"
+                    title={dapp.name}
+                  >
+                    <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={faviconUrl(dapp.domain)}
+                        alt={`${dapp.name} icon`}
+                        width={40}
+                        height={40}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        className="w-10 h-10"
+                      />
+                    </div>
+                    <span className="text-xs text-center truncate w-full">{dapp.name}</span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          );
+        })}
       </div>
-    </>
+
+      <footer className="mt-16 text-xs opacity-50 text-center">
+        Inspired by{" "}
+        <a className="link" href="https://ethereum.org/apps" target="_blank" rel="noopener noreferrer">
+          ethereum.org/apps
+        </a>
+        . Built with{" "}
+        <a className="link" href="https://scaffoldeth.io" target="_blank" rel="noopener noreferrer">
+          Scaffold-ETH 2
+        </a>
+        .
+      </footer>
+    </div>
   );
 };
 
